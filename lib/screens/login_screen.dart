@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:insta/resources/auth_methods.dart';
 import 'package:insta/utilities/colors.dart';
+import 'package:insta/utilities/utils.dart';
 import 'package:insta/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,12 +15,35 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().logInUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // ignore: use_build_context_synchronously
+      showSnackBar(res, context);
+    }
   }
 
   @override
@@ -60,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 24),
               // Button
               InkWell(
-                onTap: () {},
+                onTap: loginUser,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   width: double.infinity,
@@ -73,7 +98,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  child: const Text("Log In"),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text("Log In"),
                 ),
               ),
               const SizedBox(height: 12),
