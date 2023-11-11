@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:insta/resources/auth_methods.dart';
+import 'package:insta/responsive/mobile_screen_layout.dart';
+import 'package:insta/responsive/responsive_layout_screen.dart';
+import 'package:insta/responsive/web_screen_layout.dart';
+import 'package:insta/screens/login_screen.dart';
 import 'package:insta/utilities/colors.dart';
 import 'package:insta/utilities/utils.dart';
 import 'package:insta/widgets/text_field_input.dart';
@@ -57,6 +61,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (res != 'success') {
       // ignore: use_build_context_synchronously
       showSnackBar(res, context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     }
   }
 
@@ -158,7 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: primaryColor,
                           ),
                         )
-                      : const Text("Log In"),
+                      : const Text("Sign Up"),
                 ),
               ),
               const SizedBox(height: 12),
@@ -178,14 +192,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: const Text("Don`t have an account?"),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 8,
                       ),
                       child: const Text(
-                        "Sign Up",
+                        "Log In",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

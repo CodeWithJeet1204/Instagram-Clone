@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insta/resources/auth_methods.dart';
+import 'package:insta/responsive/mobile_screen_layout.dart';
+import 'package:insta/responsive/responsive_layout_screen.dart';
+import 'package:insta/responsive/web_screen_layout.dart';
+import 'package:insta/screens/signup_screen.dart';
 import 'package:insta/utilities/colors.dart';
 import 'package:insta/utilities/utils.dart';
 import 'package:insta/widgets/text_field_input.dart';
@@ -43,6 +47,15 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       // ignore: use_build_context_synchronously
       showSnackBar(res, context);
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     }
   }
 
@@ -124,7 +137,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text("Don`t have an account?"),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpScreen(),
+                        ),
+                      );
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 4,
