@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:insta/responsive/mobile_screen_layout.dart';
-import 'package:insta/responsive/responsive_layout_screen.dart';
-import 'package:insta/responsive/web_screen_layout.dart';
+// import 'package:insta/responsive/mobile_screen_layout.dart';
+// import 'package:insta/responsive/responsive_layout_screen.dart';
+// import 'package:insta/responsive/web_screen_layout.dart';
+// import 'package:insta/screens/login_screen.dart';
+import 'package:insta/screens/signup_screen.dart';
 import 'package:insta/utilities/colors.dart';
 
 void main() async {
@@ -35,10 +37,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor,
       ),
-      home: const ResponsiveLayout(
-        mobileScreenLayout: MobileScreenLayout(),
-        webScreenLayout: WebScreenLayout(),
-      ),
+      // home: const ResponsiveLayout(
+      //   mobileScreenLayout: MobileScreenLayout(),
+      //   webScreenLayout: WebScreenLayout(),
+      // ),
+      home: const SignUpScreen(),
     );
   }
 }
